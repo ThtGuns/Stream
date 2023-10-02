@@ -59,7 +59,15 @@ nav a {
 
 /* Lecteur vidéo principal */
 .video-player {
-    margin-top: 20px;
+    text-align: center; /* Centre le contenu horizontalement */
+}
+
+/* Styles pour la balise iframe de la vidéo */
+.video-player iframe {
+    width: 100%; /* La vidéo prendra 100% de la largeur de son conteneur */
+    height: 0; /* La hauteur initiale est définie à 0 */
+    padding-bottom: 56.25%; /* Ratio 16:9 (9 / 16 * 100) pour maintenir le rapport d'aspect */
+    border: none; /* Supprime la bordure autour de la vidéo */
 }
 
 /* Pied de page */

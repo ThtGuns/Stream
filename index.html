@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Site de Streaming</title>
+    <link rel="stylesheet" href="styles.css">
+<style type="text/css" id="dcoder_stylesheet">/* Styles généraux */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* En-tête */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Zone de recherche */
+.search-bar {
+    margin-top: 20px;
+}
+
+#search-input {
+    padding: 5px;
+    width: 200px;
+}
+
+#search-button {
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Liste de vidéos */
+.video-list {
+    padding: 20px;
+}
+
+/* Lecteur vidéo principal */
+.video-player {
+    margin-top: 20px;
+}
+
+/* Pied de page */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+</style></head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Catégories</a></li>
+                <li><a href="#">Recherche</a></li>
+                <!-- Ajoutez d'autres liens de navigation au besoin -->
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Rechercher des vidéos...">
+            <button id="search-button">Rechercher</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="video-list">
+            <!-- Liste de vidéos -->
+            <div id="video-list-container">
+                <!-- Les données de la liste de vidéos seront insérées ici -->
+            </div>
+        </section>
+
+        <section class="video-player">
+            <!-- Lecteur vidéo principal -->
+            <iframe width="640" height="360" src="https://video.sibnet.ru/shell.php?videoid=5094535&amp;share=1" frameborder="0" allowfullscreen></iframe>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2023 Votre Site de Streaming</p>
+            <!-- Ajoutez d'autres informations de pied de page au besoin -->
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+<script type="text/javascript" id="dcoder_script">// JavaScript pour la recherche en temps réel et la récupération de données JSON
+const searchInput = document.getElementById('search-input');
+const searchButton = document.getElementById('search-button');
+const videoListContainer = document.getElementById('video-list-container');
+
+searchButton.addEventListener('click', () => {
+    const searchQuery = searchInput.value;
+
+    // Effectuer une requête GET avec fetch
+    fetch(`https://example.com/api/search?q=${searchQuery}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('La requête a échoué');
+            }
+            return response.json(); // Convertir la réponse en JSON
+        })
+        .then(data => {
+            // Traiter les données reçues du serveur et afficher la liste de vidéos
+            renderVideoList(data);
+        })
+        .catch(error => {
+            // Gérer les erreurs en cas d'échec de la requête
+            console.error(error);
+        });
+});
+
+// Fonction pour afficher la liste de vidéos
+function renderVideoList(data) {
+    videoListContainer.innerHTML = ''; // Effacer le contenu précédent
+
+    data.forEach(video => {
+        const videoElement = document.createElement('div');
+        videoElement.className = 'video-item';
+        videoElement.innerHTML = `
+            <h3>${video.title}</h3>
+            <p>${video.description}</p>
+            <video controls>
+                <source src="${video.url}" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+        `;
+        videoListContainer.appendChild(videoElement);
+    });
+}
+</script></body></html>
